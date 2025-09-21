@@ -1,5 +1,7 @@
 // TP 1 
 
+console.log('--- TP 1 ---')
+
 const firstName = "Jérémy"
 
 const lastName = "Riverain"
@@ -12,6 +14,8 @@ console.log(firstName, lastName, age, hasLicense)
 
 // TP 2
 
+console.log('--- TP 2 ---')
+
 function display() {
   return `${lastName.toUpperCase()} ${firstName}`
 }
@@ -19,6 +23,8 @@ function display() {
 console.log(display())
 
 // TP 3
+
+console.log('--- TP 3 ---')
 
 class Person {
   constructor(args) {
@@ -74,3 +80,57 @@ const adult = new Adult({firstName: 'James', lastName: 'Bar', age: 100, hasLicen
 console.log(adult)
 
 console.log(adult.toString())
+
+// TP 3 - Prototype
+
+// function Person (args) {
+//     this.firstName = args?.firstName
+//     this.lastName = args?.lastName
+//     this.age = args?.age
+// }
+
+// const person = new Person({firstName: 'Jérémy', lastName: 'Riverain', age: 39})
+
+// console.log(person)
+
+// Person.prototype.toString = function () {
+//   return `${this.firstName} ${this.lastName}, ${this.age} years old`
+// }
+
+// console.log(person.toString())
+
+// function Child(args) {
+//   this.schoolLevel = args.schoolLevel
+//   Person.call(this, args)
+// }
+
+// Child.prototype = new Person()
+
+// Child.prototype.toString = function() {
+//   return `${Person.prototype.toString.call(this)}, at school in ${this.schoolLevel}`
+// }
+
+// const child = new Child({firstName: 'Foo', lastName: 'Bar', age: 6, schoolLevel: 'CP'})
+
+// console.log(child)
+
+// console.log(child.toString())
+
+// TP 4
+
+console.log('--- TP 4 ---')
+
+const persons = [person, child, adult]
+
+for (const person of persons) {
+  console.log(person)
+}
+
+console.log('display even elements')
+
+for (let index = 0; index < persons.length; index++) {
+  if (index % 2 === 0) {
+    console.log(persons[index])
+  }
+  
+}
