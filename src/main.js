@@ -134,3 +134,23 @@ for (let index = 0; index < persons.length; index++) {
   }
   
 }
+
+// TP 5
+
+console.log('--- TP 5 ---')
+
+async function displayPersons(persons) {
+  for (let index = 0; index < persons.length; index++) {
+    await new Promise((resolve) => {
+      setTimeout(function () {
+        const person = persons[index];
+        console.log(person)
+        resolve()
+      }, 1000)
+    }) 
+  }
+}
+
+(async () => {
+  await displayPersons(persons)
+})();
