@@ -33,12 +33,12 @@ class Person {
     this.age = args.age
   }
 
-  toString () {
+  toString() {
     return `${firstName} ${lastName}, ${age} years old`
   }
 }
 
-const person = new Person({firstName: 'Jérémy', lastName: 'Riverain', age: 39})
+const person = new Person({ firstName: 'Jérémy', lastName: 'Riverain', age: 39 })
 
 console.log(person)
 
@@ -50,12 +50,12 @@ class Child extends Person {
     this.schoolLevel = args.schoolLevel
   }
 
-  toString () {
+  toString() {
     return `${super.toString()}, school level: ${this.schoolLevel}`
   }
 }
 
-const child = new Child({firstName: 'Foo', lastName: 'Bar', age: 10, schoolLevel: 'CP'})
+const child = new Child({ firstName: 'Foo', lastName: 'Bar', age: 10, schoolLevel: 'CP' })
 
 console.log(child)
 console.log(child.toString())
@@ -63,19 +63,19 @@ console.log(child.toString())
 
 class Adult extends Person {
 
-  #hasLicense 
+  #hasLicense
 
   constructor(args) {
     super(args)
     this.#hasLicense = args.hasLicense
   }
 
-  toString () {
+  toString() {
     return `${super.toString()}, has license: ${this.#hasLicense}`
   }
 }
 
-const adult = new Adult({firstName: 'James', lastName: 'Bar', age: 100, hasLicense: true})
+const adult = new Adult({ firstName: 'James', lastName: 'Bar', age: 100, hasLicense: true })
 
 console.log(adult)
 
@@ -132,7 +132,7 @@ for (let index = 0; index < persons.length; index++) {
   if (index % 2 === 0) {
     console.log(persons[index])
   }
-  
+
 }
 
 // TP 5
@@ -147,10 +147,42 @@ async function displayPersons(persons) {
         console.log(person)
         resolve()
       }, 1000)
-    }) 
+    })
   }
 }
 
 (async () => {
   await displayPersons(persons)
+})();
+
+
+// TP 6
+
+console.log('--- TP 6 ---')
+
+async function displayPersonsWithException(persons) {
+  for (let index = 0; index < persons.length; index++) {
+
+    try {
+      await new Promise((resolve, reject) => {
+        setTimeout(function () {
+          const person = persons[index];
+          if (person instanceof Child) {
+            reject('child found')
+          }
+          console.log(`tp6, ${person}`)
+          resolve()
+
+
+        }, 1000)
+      })
+    } catch (error) {
+      console.error(error)
+    }
+
+  }
+}
+
+(async () => {
+  await displayPersonsWithException(persons)
 })();
