@@ -1,87 +1,95 @@
-// // TP 1 
+// TP 1 
 
 // import { Race, ferrari12cilindri, fiatPunto, opelCorsa, peugeot206, porscheCayenne, renaultMaster } from "./car"
 
-// console.log('--- TP 1 ---')
+import { filter } from 'lodash'
 
-// const firstName = "Jérémy"
+import dayjs from 'dayjs'
 
-// const lastName = "Riverain"
+console.log('--- TP 1 ---')
 
-// const age = 39
+const firstName = "Jérémy"
 
-// const hasLicense = true
+const lastName = "Riverain"
 
-// console.log(firstName, lastName, age, hasLicense)
+const age = 39
 
-// // TP 2
+const hasLicense = true
 
-// console.log('--- TP 2 ---')
+console.log(firstName, lastName, age, hasLicense)
 
-// function display() {
-//   return `${lastName.toUpperCase()} ${firstName}`
-// }
+// TP 2
 
-// console.log(display())
+console.log('--- TP 2 ---')
 
-// // TP 3
+function display() {
+  return `${lastName.toUpperCase()} ${firstName}`
+}
 
-// console.log('--- TP 3 ---')
+console.log(display())
 
-// class Person {
-//   constructor(args) {
-//     this.firstName = args.firstName
-//     this.lastName = args.lastName
-//     this.age = args.age
-//   }
+// TP 3
 
-//   toString() {
-//     return `${firstName} ${lastName}, ${age} years old`
-//   }
-// }
+console.log('--- TP 3 ---')
 
-// const person = new Person({ firstName: 'Jérémy', lastName: 'Riverain', age: 39 })
+class Person {
+  constructor(args) {
+    this.firstName = args.firstName
+    this.lastName = args.lastName
+    this.age = args.age
+  }
 
-// console.log(person)
+  toString() {
+    return `${firstName} ${lastName}, ${age} years old`
+  }
+}
 
-// console.log(person.toString())
+const person = new Person({ firstName: 'Jérémy', lastName: 'Riverain', age: 39 })
 
-// class Child extends Person {
-//   constructor(args) {
-//     super(args)
-//     this.schoolLevel = args.schoolLevel
-//   }
+console.log(person)
 
-//   toString() {
-//     return `${super.toString()}, school level: ${this.schoolLevel}`
-//   }
-// }
+console.log(person.toString())
 
-// const child = new Child({ firstName: 'Foo', lastName: 'Bar', age: 10, schoolLevel: 'CP' })
+class Child extends Person {
+  constructor(args) {
+    super(args)
+    this.schoolLevel = args.schoolLevel
+  }
 
-// console.log(child)
-// console.log(child.toString())
+  toString() {
+    return `${super.toString()}, school level: ${this.schoolLevel}`
+  }
+}
+
+const child = new Child({ firstName: 'Foo', lastName: 'Bar', age: 10, schoolLevel: 'CP' })
+
+console.log(child)
+console.log(child.toString())
 
 
-// class Adult extends Person {
+class Adult extends Person {
 
-//   #hasLicense
+  #hasLicense
 
-//   constructor(args) {
-//     super(args)
-//     this.#hasLicense = args.hasLicense
-//   }
+  constructor(args) {
+    super(args)
+    this.#hasLicense = args.hasLicense
+  }
 
-//   toString() {
-//     return `${super.toString()}, has license: ${this.#hasLicense}`
-//   }
-// }
+  toString() {
+    return `${super.toString()}, has license: ${this.#hasLicense}`
+  }
 
-// const adult = new Adult({ firstName: 'James', lastName: 'Bar', age: 100, hasLicense: true })
+  get hasLicense() {
+    return this.#hasLicense
+  }
+}
 
-// console.log(adult)
+const adult = new Adult({ firstName: 'James', lastName: 'Bar', age: 100, hasLicense: true })
 
-// console.log(adult.toString())
+console.log(adult)
+
+console.log(adult.toString())
 
 // TP 3 - Prototype
 
@@ -118,24 +126,24 @@
 
 // console.log(child.toString())
 
-// // TP 4
+// TP 4
 
-// console.log('--- TP 4 ---')
+console.log('--- TP 4 ---')
 
-// const persons = [person, child, adult]
+const persons = [person, child, adult]
 
-// for (const person of persons) {
-//   console.log(person)
-// }
+for (const person of persons) {
+  console.log(person)
+}
 
-// console.log('display even elements')
+console.log('display even elements')
 
-// for (let index = 0; index < persons.length; index++) {
-//   if (index % 2 === 0) {
-//     console.log(persons[index])
-//   }
+for (let index = 0; index < persons.length; index++) {
+  if (index % 2 === 0) {
+    console.log(persons[index])
+  }
 
-// }
+}
 
 // // TP 5
 
@@ -188,6 +196,92 @@
 // (async () => {
 //   await displayPersonsWithException(persons)
 // })();
+
+// TP 7
+
+console.log('=== TP 7 ===')
+
+/**
+ * @param {Person} person 
+ */
+function isAdult(person) {
+  return person.age >= 18
+}
+
+/**
+ * @param {Person[]} persons 
+ */
+function findAdults(persons) {
+  return persons.filter(isAdult)
+}
+
+/**
+ * @param {Person[]} persons 
+ */
+function lodashFindAdults(persons) {
+  return filter(persons, isAdult)
+}
+
+console.log(findAdults(persons))
+console.log(lodashFindAdults(persons))
+
+/**
+ * 
+ * @param {Person[]} persons 
+ */
+function groupByLicense(persons) {
+  const map = new Map()
+
+  map.set(true, persons.filter(p => p instanceof Adult && p.hasLicense))
+  map.set(false, persons.filter(p => !(p instanceof Adult) || !p.hasLicense))
+  return map
+}
+
+console.log(groupByLicense(persons))
+
+/**
+ * 
+ * @param {Person[]} persons 
+ */
+function incrementAge(persons) {
+  return persons.forEach((p) => {
+    p.age += 1
+  })
+}
+
+const newPersons = structuredClone(persons)
+
+incrementAge(newPersons)
+
+console.log(newPersons)
+
+/**
+ * 
+ * @param {Person} person 
+ */
+function findBirthDate(person) {
+  const now = dayjs()
+  const birthDate = now.subtract(person.age, 'year')
+  return birthDate
+}
+
+console.log(findBirthDate(person))
+
+/**
+ * 
+ * @param {Person[]} persons 
+ */
+function bonus(persons) {
+  return persons.filter(p => p.firstName.length > 4).reduce((prev, curr, index, values) => {
+    const sum = prev + curr.age
+    if (values.length - 1 == index) {
+      return sum / values.length
+    }
+    return sum
+  }, 0)
+}
+
+console.log(bonus(persons))
 
 // // TP 8
 
